@@ -8,14 +8,19 @@
   <body>
   	<% include ../partials/header %>
 
+    <% if (message) { %>
+      <div class="info "><p> <%= message %></p></div>
+   <% } %>
+
   	<div class="container">
 		<div class="page-header m-t-1">
 			<h1><%= title %></h1>
 		</div>
 		<p class="lead">Welcome to <%= title %></p>
+
 	</div>
 
-    
+
 
     <% include ../partials/footer %>
 	<% include ../partials/javascript %>

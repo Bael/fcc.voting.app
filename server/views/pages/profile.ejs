@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../partials/stylesheet %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<% include ../partials/header %>
+
+    <% if (message) { %>
+      <div class="info "><p> <%= message %></p></div>
+   <% } %>
+pro
+  	<div class="container">
+		<div class="page-header m-t-1">
+			<h1><%= title %></h1>
+		</div>
+		<p class="lead">Welcome to profile page <%= title %></p>
+
+	</div>
+
+
+
+    <% include ../partials/footer %>
+	<% include ../partials/javascript %>
+  </body>
+</html>
