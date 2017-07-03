@@ -16,7 +16,20 @@
 		<div class="page-header m-t-1">
 			<h1><%= title %></h1>
 		</div>
-		<p class="lead">Welcome to profile page <%= title %></p>
+		<p class="lead">Welcome to <%= title %></p>
+    <p>Here you can vote on polls from list. Or create your own poll.</p>
+    <a href="/polls/new"> Create new poll</a>
+    <ul>
+    <% for(var i=0; i < polls.length; i++) { %>
+        <li>
+            <a href='polls/<%= polls[i]._id %>'>
+                <%= polls[i].name %>
+            </a>
+        </li>
+    <% } %>
+    </ul>
+
+
 
 	</div>
 

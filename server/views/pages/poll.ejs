@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../partials/stylesheet %>
+    <% include ../partials/javascript %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+    $(document).ready(function(){
+
+      $("#deleteBtn").click(function(){
+
+
+            $.ajax({
+              url: '/polls/<%= poll._id %>',
+              type: 'DELETE',
+              success: function(result) {
+                // Do something with the result
+
+
+
+                window.location.href = "/polls";
+
+
+              },
+              error: function(error) {
+                alert('error occured '+ JSON.stringify(error));
+              }
+            });
+
+
+
+      });
+
+      $("#addBtn").click(function() {
+        $("#updateBtn").before(" <label for='pollOption' class='sr-only'>Option #1</label>   <input type='text' id='option1' name='option1' class='form-control' placeholder='option1'   > ");
+      });
+});
+
+    </script>
+  </head>
+  <body>
+  	<% include ../partials/header %>
+
+
+   <% if (message && message.length > 0 ) { %>
+     <div class="alert alert-warning alert-dismissible fade in" role="alert">
+       <p> <%= message %>
+     </div>
+
+   <% } %>
+
+  	<div class="container">
+
+      <form class="form" action="/polls" method="put" id="pollForm">
+            <h2 class="">poll</h2>
+               <label for="pollName" class="sr-only">Name</label>
+               <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
+
+
+               <label for="pollOption" class="sr-only">Option #1</label>
+               <input type="text" id="option1" name="option1" class="form-control" placeholder="option1" required value="<%= poll.options[0].name %>">
+
+
+               <button id="updateBtn" class="btn btn-lg btn-primary btn-block" type="submit">Update </button>
+               <br>
+
+       </form>
+       <button id="addBtn" class="btn btn-lg btn-primary btn-block" >add new option </button>
+	</div>
+  <% if (userIsAuthenticated) { %>
+
+     <button id="deleteBtn"  class="btn btn-lg btn-primary btn-block" >Delete </button>
+
+
+
+  <% } %>
+
+
+  <% include ../partials/footer %>
+
+  </body>
+</html>

@@ -15,6 +15,7 @@ const {MongoClient, ObjectID} = require('mongodb');
 const index = require('./server/routes/index');
 const users = require('./server/routes/users');
 const profileRoute = require('./server/routes/profile');
+const pollsRoute = require('./server/routes/polls');
 
 /*-------------- Set up express ---------------*/
 
@@ -72,7 +73,7 @@ app.use(flash());
 app.use('/', index);
 app.use('/users', users);
 app.use('/profile', profileRoute);
-
+app.use('/polls', pollsRoute);
 // -------------------------- End of Routing ----------------------------
 
 

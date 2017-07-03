@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../partials/stylesheet %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<% include ../partials/header %>
+
+    <% if (message) { %>
+      <div class="info "><p> <%= message %></p></div>
+   <% } %>
+
+  	<div class="container">
+		<div class="page-header m-t-1">
+			<h1><%= title %></h1>
+		</div>
+		<p class="lead">Welcome to <%= title %></p>
+    <p>Here you can create your own poll.</p>
+
+    <div class="container">
+
+      <form class="form" action="/polls/new" method="post">
+            <h2 class="">Create new poll</h2>
+               <label for="pollName" class="sr-only">Name</label>
+               <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required>
+
+               <label for="pollOption" class="sr-only">Option #1</label>
+               <input type="text" id="option1" name="option1" class="form-control" placeholder="option1" required>
+
+               <button class="btn btn-lg btn-primary btn-block" type="submit">Create </button>
+               <br>
+
+       </form>
+	</div>
+
+	</div>
+
+
+
+  <% include ../partials/footer %>
+	<% include ../partials/javascript %>
+  </body>
+</html>

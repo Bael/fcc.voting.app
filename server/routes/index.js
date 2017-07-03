@@ -1,12 +1,20 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
-
+const Poll = require('../models/polls');
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' , message:req.flash('message')});
+  Poll.find({}, function(err, founded) {
+    if(err) {
+      return next(err);
+    } else {
+        res.render('index', { title: 'Express' , message:req.flash('message'), polls : founded });
+    }
+
+  } )
+
 });
 
 /* AUTH work*/
