@@ -3,87 +3,25 @@ var router = express.Router();
 const passport = require('passport');
 const Poll = require('../models/polls');
 
+const pollsController = require('../controllers/pollsController');
+const authController = require('../controllers/authController');
 
 /* GET home page. */
-router.get('/', isAllowed, function(req, res, next) {
-  Poll.find({}, function(err, founded) {
-    if(err) {
-      return next(err);
-    } else {
-        res.render('polls', { title: 'Polls list' , message:req.flash('message'), polls : founded });
-    }
-  } )
+router.get('/', authController.isAuthenticated, pollsController.getList);
 
-});
+/* GET new poll page. */
+router.get('/new', authController.isAuthenticated, pollsController.getNewInstance);
 
+/* create new poll . */
+router.post('/new', authController.isAuthenticated, pollsController.createNewPoll);
 
+/* get poll by id. */
+router.get('/:id', authController.isAuthenticated, pollsController.getById);
 
-/* GET home page. */
-router.get('/new', isAllowed, function(req, res, next) {
-  Poll.find({}, function(err, founded) {
-    if(err) {
-      return next(err);
-    } else {
-        res.render('newpoll', { title: 'Creating new poll' , message:req.flash('message')});
-    }
-  } )
+/* delete poll by id. */
+router.delete('/:id', authController.isAuthenticated, pollsController.deleteById);
 
-});
-
-router.post('/new', isAllowed, function(req, res, next) {
-  let {name, option1} = req.body;
-  var poll = new Poll({name,  authorId:req.user._id, options:[{name:option1}]});
-
-  poll.save(function(err, created) {
-    if(err) {
-      return next(err);
-    } else {
-        res.redirect('/polls/'+created._id);
-    }
-  } )
-
-});
-
-
-router.get('/:id', isAllowed, function(req, res, next) {
-    Poll.findById(req.params.id, function(err, founded) {
-    if(err) {
-      return next(err);
-    } else {
-        res.render('poll', { title: 'Poll info' , message:req.flash('message'), poll : founded, userIsAuthenticated: req.isAuthenticated() });
-    }
-  })
-});
-
-//
-router.delete('/:id', isAllowed, function(req, res, next) {
-
-  res.send({status:"success"});
-
-  //console.log("delete id is called! id ='"+req.params.id+"'");
-  //res.get('/polls/');
-
-});
-
-router.put('/:id', isAllowed, function(req, res, next) {
-    Poll.findById(req.params.id, function(err, founded) {
-    if(err) {
-      return next(err);
-    } else {
-      founded.name = res.body.name;
-      founded.save();
-
-        //res.render('poll', { title: 'Poll info' , message:req.flash('message'), poll : founded });
-    }
-  })
-});
+/* update poll. */
+router.put('/:id', authController.isAuthenticated, pollsController.updatePoll);
 
 module.exports = router;
-
-
-// Check authorization
-function isAllowed(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    res.redirect('/login');
-};
