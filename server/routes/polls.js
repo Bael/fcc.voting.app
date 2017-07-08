@@ -24,4 +24,14 @@ router.delete('/:id', authController.isAuthenticated, pollsController.deleteById
 /* update poll. */
 router.post('/:id', authController.isAuthenticated, pollsController.updatePoll);
 
+/* get poll for vote by id. */
+router.get('/vote/:id', pollsController.getForVoteById);
+
+router.post('/voteresult/:id', pollsController.getVoteResultById);
+
+/* get poll for vote by id. */
+router.post('/vote/:id', pollsController.vote);
+
+
+
 module.exports = router;

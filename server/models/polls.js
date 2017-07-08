@@ -33,4 +33,19 @@ pollSchema.methods.hasOption = function(name) {
  
 };
 
+pollSchema.methods.vote = function(name, userInfo) {
+  for (var i=0; i < this.options.length; i++) {
+    if(this.options[i].name === name)
+    {
+      console.log("founded vote!");
+      this.options[i].votes ++;
+    }
+  }
+
+  this.votes.push({voterId:userInfo.userId, voterIP:userInfo.ip});
+
+
+}
+
+
 module.exports = mongoose.model('Poll', pollSchema);

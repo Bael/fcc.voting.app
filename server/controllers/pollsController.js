@@ -118,21 +118,61 @@ module.exports.updatePoll = function (req, res, next) {
 };
 
 
-/*
+// get poll by id
+module.exports.getForVoteById = function (req, res, next) {
+  Poll.findById(req.params.id, function (err, founded) {
+    if (err) {
+      return next(err);
+    } else {
+      res.render('pollvote', {
+        title: 'Poll vote info',
+        message: req.flash('message'),
+        poll: founded
+      });
+    }
+  })
+};
+
+module.exports.getVoteResultById = function (req, res, next) {
+  Poll.findById(req.params.id, function (err, founded) {
+    if (err) {
+      return next(err);
+    } else {
+
+      var result = {labels:[], data : []};
+
+      for (var i=0; i<founded.options.length; i++) {
+          result.labels.push(founded.options[i].name);
+          result.data.push(founded.options[i].votes);
+      }
+      res.send(result);
+    }
+  })
+};
+
 module.exports.vote = function (req, res, next) {
   Poll.findById(req.params.id, function (err, founded) {
     if (err) {
       return next(err);
     } else {
 
+      console.log(JSON.stringify(req.body));
+      let userInfo = {ip:req.ip};
 
-      res.render('poll', {
-        title: 'Poll info',
+      if (req.isAuthenticated()) {
+         userInfo.userId = req.user._id; 
+      }
+      
+      founded.vote(req.body.pollOption, userInfo);
+      founded.save(function(err, savedPoll) {
+        res.render('pollvoteresult', {
+        title: 'Poll voting info',
         message: req.flash('message'),
-        poll: founded,
-        userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId === req.user._id)
+        poll: savedPoll
       });
+
+      });
+
     }
   })
 };
-*/

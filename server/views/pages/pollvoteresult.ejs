@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <% include ../partials/stylesheet %>
+    <% include ../partials/javascript %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+      
+       <script>
+        $(document).ready(function () {
+
+
+
+            $.ajax({
+              url: '/polls/voteresult/<%= poll._id %>',
+              type: 'POST',
+              success: function (result) {
+                    var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: result.labels,
+        datasets: [{
+            label: '# of Votes',
+            data: result.data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+                
+              },
+              error: function (error) {
+                alert('error occured ' + JSON.stringify(error));
+              }
+            });
+          });
+
+        
+      </script>
+
+</head>
+
+<body>
+  <% include ../partials/header %>
+
+
+    <% if (message && message.length > 0 ) { %>
+      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <p>
+          <%= message %>
+      </div>
+
+      <% } %>
+
+        
+
+        <div class="container">
+
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+</script>
+          <form class="form" action="/polls/vote/<%= poll._id %>" method="post" id="pollForm">
+            <h2 class="">poll</h2>
+            <label for="pollName" class="sr-only">Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
+
+            <% for (var i=0; i<poll.options.length; i++) { %>
+
+                <label for="pollOption" class="sr-only"> <%= poll.options[i].name %></label>
+                <input type="text" name="pollOption" readonly  value="option: <%= poll.options[i].name %> votes: <%= poll.options[i].votes %> ">
+                
+                <br>
+
+            <% } %>
+
+            
+            
+          </form>
+           </div>
+        
+
+          <% include ../partials/footer %>
+
+</body>
+
+</html>

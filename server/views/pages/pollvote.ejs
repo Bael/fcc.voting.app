@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <% include ../partials/stylesheet %>
+    <% include ../partials/javascript %>
+    
+    
+
+      
+</head>
+
+<body>
+  <% include ../partials/header %>
+
+
+    <% if (message && message.length > 0 ) { %>
+      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <p>
+          <%= message %>
+      </div>
+
+      <% } %>
+
+        <div class="container">
+
+          <form class="form" action="/polls/vote/<%= poll._id %>" method="post" id="pollForm">
+            <h2 class="">poll</h2>
+            <label for="pollName" class="sr-only">Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
+
+            <% for (var i=0; i<poll.options.length; i++) { %>
+
+                <label for="pollOption" class="sr-only"> <%= poll.options[i].name %></label>
+                <input type="radio" name="pollOption" readonly  value="<%= poll.options[i].name %>">
+                
+                <br>
+
+            <% } %>
+
+            <button id="updateBtn" class="btn btn-lg btn-primary btn-block" type="submit">Vote! </button>
+            
+          </form>
+           </div>
+        
+
+          <% include ../partials/footer %>
+
+</body>
+
+</html>
