@@ -58,15 +58,16 @@
             <label for="pollName" class="sr-only">Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
 
+            <ul>
             <% for (var i=0; i<poll.options.length; i++) { %>
-
+                <li>
                 <label for="pollOption" class="sr-only">Option</label>
                 <input type="text" name="pollOption" readonly class="form-control" placeholder="poll option" required value="<%= poll.options[i].name %>">
+                </li>
                 
-                <br>
 
             <% } %>
-
+            </ul>
             <button id="updateBtn" class="btn btn-lg btn-primary btn-block" type="submit">Update </button>
             <br>
 

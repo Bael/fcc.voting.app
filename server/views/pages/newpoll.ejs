@@ -9,8 +9,8 @@
     <script>
         $(document).ready(function () {
           $("#addBtn").click(function () {
-            $("#pollsBlock").after(
-              " <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' name='pollOption' class='form-control' placeholder='vote option'   > <br> "
+            $("#pollsBlock").before(
+              " <li> <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' required  name='pollOption' class='form-control' placeholder='vote option'   >  </li>"
             );
           });
         });
@@ -32,22 +32,24 @@
     <p>Here you can create your own poll.</p>
 
     <div class="container">
-    <button id="addBtn" class="btn btn-lg btn-primary btn-block">add new option </button>
+    <button id="addBtn" class="btn btn-lg btn-primary btn-block">Add new option </button>
 
       <form class="form" action="/polls/new" method="post">
             <h2 class="">Create new poll</h2>
 
-              <div id="pollsBlock">
+                
                <label for="pollName" class="sr-only">Name</label>
                <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required>
-
-                <label for="pollOption" class="sr-only">Option</label>
+                <ul id="pollsBlock">
+                  <li>
+                <label for="pollOption" class="sr-only">Vote option</label>
                 <input type="text" name="pollOption" class="form-control" placeholder="poll option" required >
                 <br>
-
-                </div>
-
-               <button class="btn btn-lg btn-primary btn-block" type="submit">Create </button>
+                </li>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Create </button>
+                <ul>
+              
+               
                <br>
 
        </form>

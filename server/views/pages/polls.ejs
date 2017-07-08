@@ -22,9 +22,16 @@
     <ul>
     <% for(var i=0; i < polls.length; i++) { %>
         <li>
+          <p>
             <a href='polls/<%= polls[i]._id %>'>
-                <%= polls[i].name %>
+                Edit poll <%= polls[i].name %>
             </a>
+            </p>
+            <p>
+            <a href='polls/vote/<%= polls[i]._id %>'>
+                Vote for <%= polls[i].name %>
+            </a>
+            </p>
         </li>
     <% } %>
     </ul>
