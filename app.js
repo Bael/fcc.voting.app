@@ -49,8 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
-
 // auth work
 console.log(`process.env.SESSION_SECRET is ${process.env.SESSION_SECRET}`);
 

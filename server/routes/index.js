@@ -1,45 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const passport = require('passport');
-const Poll = require('../models/polls');
 
+const indexController = require('../controllers/indexController');
+const authController = require('../controllers/authController');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  Poll.find({}, function(err, founded) {
-    if(err) {
-      return next(err);
-    } else {
-        res.render('index', { title: 'Express' , message:req.flash('message'), polls : founded });
-    }
-
-  } )
-
-});
+router.get('/', indexController.getIndex);
 
 /* AUTH work*/
-router.get('/login', function(req, res, next) {
-      res.render('login', {title: 'Login page',  message: req.flash('loginMessage')});
-});
+router.get('/login', authController.getLoginPage);
 
-router.post('/login', passport.authenticate('local-login', { successRedirect: '/',
-                                    successFlash: { message: "welcome back" },
-                                       failureRedirect: '/login',
-                                       failureFlash: true }));
+router.post('/login', authController.loginUser);
 
-router.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-})
+router.get('/logout', authController.logoutUser)
 
+router.get('/signup', authController.getSignUpPage);
 
-router.get('/signup', function(req, res, next) {
-     res.render('signup', {title: 'Signup page',  message: req.flash('signupMessage')});
-});
-
-router.post('/signup', passport.authenticate('local-signup', { successRedirect: '/',
-                                   successFlash: { message: "welcome newcomer!" },
-                                      failureRedirect: '/signup',
-                                      failureFlash: true }));
+router.post('/signup', authController.signUpUser);
 
 module.exports = router;
