@@ -4,6 +4,18 @@
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+          $("#addBtn").click(function () {
+            $("#pollsBlock").after(
+              " <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' name='pollOption' class='form-control' placeholder='vote option'   > <br> "
+            );
+          });
+        });
+      </script>
+
   </head>
   <body>
   	<% include ../partials/header %>
@@ -20,19 +32,26 @@
     <p>Here you can create your own poll.</p>
 
     <div class="container">
+    <button id="addBtn" class="btn btn-lg btn-primary btn-block">add new option </button>
 
       <form class="form" action="/polls/new" method="post">
             <h2 class="">Create new poll</h2>
+
+              <div id="pollsBlock">
                <label for="pollName" class="sr-only">Name</label>
                <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required>
 
-               <label for="pollOption" class="sr-only">Option #1</label>
-               <input type="text" id="option1" name="option1" class="form-control" placeholder="option1" required>
+                <label for="pollOption" class="sr-only">Option</label>
+                <input type="text" name="pollOption" class="form-control" placeholder="poll option" required >
+                <br>
+
+                </div>
 
                <button class="btn btn-lg btn-primary btn-block" type="submit">Create </button>
                <br>
 
        </form>
+
 	</div>
 
 	</div>

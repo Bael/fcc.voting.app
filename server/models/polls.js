@@ -14,12 +14,23 @@ var pollSchema = mongoose.Schema({
     ],
     votes: [
       {
-
         voterId: Schema.Types.ObjectId,
         voterIP: String
       }
     ]
 });
 
+// assign a function to the "methods" object of our pollSchema
+pollSchema.methods.hasOption = function(name) {
+  for (var i=0; i < this.options.length; i++) {
+    if(this.options[i].name === name)
+    {
+      return true;
+    }
+  }
+
+  return false;
+ 
+};
 
 module.exports = mongoose.model('Poll', pollSchema);

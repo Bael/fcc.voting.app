@@ -2,68 +2,137 @@ const passport = require('passport');
 const Poll = require('../models/polls');
 
 // get all polls
-module.exports.getList = function(req, res, next) {
-  Poll.find({}, function(err, founded) {
-    if(err) {
+module.exports.getList = function (req, res, next) {
+  Poll.find({}, function (err, founded) {
+    if (err) {
       return next(err);
     } else {
-        res.render('polls', { title: 'Polls list' , message:req.flash('message'), polls : founded });
+      res.render('polls', {
+        title: 'Polls list',
+        message: req.flash('message'),
+        polls: founded
+      });
     }
   });
 }
 
 // get new poll info
-module.exports.getNewInstance = function(req, res, next) {
-  res.render('newpoll', { title: 'Creating new poll' , message:req.flash('message')});
+module.exports.getNewInstance = function (req, res, next) {
+  res.render('newpoll', {
+    title: 'Creating new poll',
+    message: req.flash('message')
+  });
 
 };
 
-// save new poll
-module.exports.createNewPoll = function(req, res, next) {
-  let {name, option1} = req.body;
-  var poll = new Poll({name,  authorId:req.user._id, options:[{name:option1}]});
+/// fill name and options text
+function fillPollInfo(poll, req) {
+      poll.name = req.body.name;
+      
+      for (var i=0; i<req.body.pollOption.length; i++)
+      {
+        var option = req.body.pollOption[i];
+        if (!poll.hasOption(option))
+        {
+          poll.options.push({name: option, votes: 0});
+        }
+      }
+}
 
-  poll.save(function(err, created) {
-    if(err) {
+// save new poll
+module.exports.createNewPoll = function (req, res, next) {
+  
+  var poll = new Poll({
+     authorId: req.user._id,
+  });
+
+  fillPollInfo(poll, req);
+    for (var i=0; i<req.body.pollOption.length; i++)
+      {
+        var option = req.body.pollOption[i];
+        if (!poll.hasOption(option))
+        {
+          poll.options.push({name: option, votes: 0});
+        }
+      }
+
+  poll.save(function (err, created) {
+    if (err) {
       return next(err);
     } else {
-        res.redirect('/polls/'+created._id);
+      res.redirect('/polls/' + created._id);
     }
   })
 
 };
 
 // get poll by id
-module.exports.getById = function(req, res, next) {
-    Poll.findById(req.params.id, function(err, founded) {
-    if(err) {
+module.exports.getById = function (req, res, next) {
+  Poll.findById(req.params.id, function (err, founded) {
+    if (err) {
       return next(err);
     } else {
-        res.render('poll', { title: 'Poll info' , message:req.flash('message'), poll : founded, userIsAuthenticated: req.isAuthenticated() });
+      res.render('poll', {
+        title: 'Poll info',
+        message: req.flash('message'),
+        poll: founded,
+        userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId === req.user._id)
+      });
     }
   })
 };
 
 // delete poll by id
-module.exports.deleteById = function(req, res, next) {
-
-  res.send({status:"success"});
-
-  //console.log("delete id is called! id ='"+req.params.id+"'");
-  //res.get('/polls/');
+module.exports.deleteById = function (req, res, next) {
+  Poll.remove({_id:req.params.id}, function (err, result) {
+    if (err) {
+      return next(err);
+    }
+    res.send({
+      status: "successfully deleted"
+    });
+  })
 
 };
 
 // update poll
-module.exports.updatePoll =  function(req, res, next) {
-    Poll.findById(req.params.id, function(err, founded) {
-    if(err) {
+module.exports.updatePoll = function (req, res, next) {
+  console.log("req.params.id is "+ req.params.id);
+  console.log(JSON.stringify(res.body));
+  Poll.findById(req.params.id, function (err, founded) 
+  {
+    if (err) {
+      console.log(err);
       return next(err);
     } else {
-      founded.name = res.body.name;
-      founded.save();
 
-        //res.render('poll', { title: 'Poll info' , message:req.flash('message'), poll : founded });
+      fillPollInfo(founded, req);
+      founded.save(function(err, success) {
+        if(err) return next(err);
+
+        console.log(JSON.stringify(founded));
+        res.render('poll', { title: 'Poll info' , message:"poll saved!", poll : success, userIsAuthenticatedAndAuthor: (req.isAuthenticated() && success.authorId === req.user._id) });
+      });
     }
   })
 };
+
+
+/*
+module.exports.vote = function (req, res, next) {
+  Poll.findById(req.params.id, function (err, founded) {
+    if (err) {
+      return next(err);
+    } else {
+
+
+      res.render('poll', {
+        title: 'Poll info',
+        message: req.flash('message'),
+        poll: founded,
+        userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId === req.user._id)
+      });
+    }
+  })
+};
+*/

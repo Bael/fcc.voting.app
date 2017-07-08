@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const passport = require('passport');
 const Poll = require('../models/polls');
 
@@ -22,6 +22,6 @@ router.get('/:id', authController.isAuthenticated, pollsController.getById);
 router.delete('/:id', authController.isAuthenticated, pollsController.deleteById);
 
 /* update poll. */
-router.put('/:id', authController.isAuthenticated, pollsController.updatePoll);
+router.post('/:id', authController.isAuthenticated, pollsController.updatePoll);
 
 module.exports = router;
