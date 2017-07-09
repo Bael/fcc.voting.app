@@ -5,34 +5,32 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
-const {MongoClient, ObjectID} = require('mongodb');
 
-/*-------------- Declare routes ---------------*/
+
+/* -------------- Declare routes ---------------*/
 const index = require('./server/routes/index');
 const users = require('./server/routes/users');
 const profileRoute = require('./server/routes/profile');
 const pollsRoute = require('./server/routes/polls');
 
-/*-------------- Set up express ---------------*/
+/* -------------- Set up express ---------------*/
 
-let app = express();
+const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, "server", 'views/pages'));
+app.set('views', path.join(__dirname, 'server', 'views/pages'));
 app.set('view engine', 'ejs');
 
 // Database configuration
 // connect to our database
 mongoose.connect(process.env.MONGO_URI);
 // Check if MongoDB is running
-mongoose.connection.on('error', function() {
+mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Make sure MongoDB is running.');
-  throw new Error("MongoDB Connection Error. Make sure MongoDB is running.");
-
+  throw new Error('MongoDB Connection Error. Make sure MongoDB is running.');
 });
 
 
@@ -49,15 +47,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 // auth work
 console.log(`process.env.SESSION_SECRET is ${process.env.SESSION_SECRET}`);
 
-var session_configuration = {
+const session_configuration = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: true },
 };
 
 // !!!!!!!!!!!!for development purposes
@@ -77,15 +74,15 @@ app.use('/polls', pollsRoute);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

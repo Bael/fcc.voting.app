@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+
+const router = express.Router();
 
 const indexController = require('../controllers/indexController');
 const authController = require('../controllers/authController');
@@ -12,7 +13,7 @@ router.get('/login', authController.getLoginPage);
 
 router.post('/login', authController.loginUser);
 
-router.get('/logout', authController.logoutUser)
+router.get('/logout', authController.logoutUser);
 
 router.get('/signup', authController.getSignUpPage);
 

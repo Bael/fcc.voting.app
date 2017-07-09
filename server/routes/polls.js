@@ -1,10 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const Poll = require('../models/polls');
-
 const pollsController = require('../controllers/pollsController');
 const authController = require('../controllers/authController');
+
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', authController.isAuthenticated, pollsController.getList);
@@ -31,7 +29,5 @@ router.post('/voteresult/:id', pollsController.getVoteResultById);
 
 /* get poll for vote by id. */
 router.post('/vote/:id', pollsController.vote);
-
-
 
 module.exports = router;
