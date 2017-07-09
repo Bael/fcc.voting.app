@@ -1,20 +1,10 @@
 const express = require('express');
+const authController = require('../controllers/authController');
+const profileController = require('../controllers/profileController');
 
 const router = express.Router();
-
-// Check authorization
-function isAllowed(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-
-  res.redirect('/login');
-}
-
 /* GET home page. */
-router.get('/', isAllowed, (req, res, next) => {
-  res.render('profile', { title: 'Profile page', message: req.flash('message') });
-});
+router.get('/', authController.isAuthenticated, profileController.getProfile);
 
 
 module.exports = router;

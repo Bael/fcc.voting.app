@@ -25,9 +25,12 @@ router.post('/:id', authController.isAuthenticated, pollsController.updatePoll);
 /* get poll for vote by id. */
 router.get('/vote/:id', pollsController.getForVoteById);
 
-router.post('/voteresult/:id', pollsController.getVoteResultById);
+// get chart info
+router.get('/voteresultchart/:id', pollsController.getVoteResultById);
+// get chart page
+router.get('/voteresult/:id', pollsController.getVoteResultPage);
 
-/* get poll for vote by id. */
+/* vote by id. */
 router.post('/vote/:id', pollsController.vote);
 
 module.exports = router;

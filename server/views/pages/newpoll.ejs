@@ -4,12 +4,20 @@
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+          ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+      }
+
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
         $(document).ready(function () {
           $("#addBtn").click(function () {
-            $("#pollsBlock").before(
+            $("#addBtn").before(
               " <li> <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' required  name='pollOption' class='form-control' placeholder='vote option'   >  </li>"
             );
           });
@@ -25,34 +33,36 @@
    <% } %>
 
   	<div class="container">
-		<div class="page-header m-t-1">
+		<!--div class="page-header m-t-1">
 			<h1><%= title %></h1>
-		</div>
-		<p class="lead">Welcome to <%= title %></p>
-    <p>Here you can create your own poll.</p>
+		</div-->
+		
+    <p class="lead">Here you can create your own poll.</p>
 
     <div class="container">
-    <button id="addBtn" class="btn btn-lg btn-primary btn-block">Add new option </button>
+    
 
       <form class="form" action="/polls/new" method="post">
-            <h2 class="">Create new poll</h2>
+            
+                <label for="pollName" class="sr-only">Name</label>
+                <input type="text" id="name" name="pollName" class="form-control" placeholder="Name of poll" required>
 
-                
-               <label for="pollName" class="sr-only">Name</label>
-               <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required>
+                <p>Options:</p>
                 <ul id="pollsBlock">
-                  <li>
-                <label for="pollOption" class="sr-only">Vote option</label>
-                <input type="text" name="pollOption" class="form-control" placeholder="poll option" required >
-                <br>
+                <li>
+                  <label for="pollOption" class="sr-only">Vote option</label>
+                  <input type="text" name="pollOption" class="form-control" placeholder="poll option" required >
+                
                 </li>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Create </button>
+                <button title="Click to add a new vote option" id="addBtn" class="btn btn-block">Add new vote option </button>         
+                <button title="Click to create a new poll" class="btn btn-lg btn-primary btn-block" type="submit">Create new poll </button>
                 <ul>
               
                
                <br>
 
        </form>
+       
 
 	</div>
 

@@ -7,10 +7,15 @@
   </title>
   <% include ../partials/stylesheet %>
     <% include ../partials/javascript %>
-    
-    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script>
+        function enableVoting() {
 
-      
+          $('#updateBtn').attr('disabled', false);
+        }
+      </script>
+
+
 </head>
 
 <body>
@@ -18,7 +23,7 @@
 
 
     <% if (message && message.length > 0 ) { %>
-      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <div class="alert alert-warning " role="alert">
         <p>
           <%= message %>
       </div>
@@ -34,20 +39,23 @@
 
             <% for (var i=0; i<poll.options.length; i++) { %>
 
-                <label for="pollOption" class="sr-only"> <%= poll.options[i].name %></label>
-                <input type="radio" name="pollOption" readonly  value="<%= poll.options[i].name %>">
-                
-                <br>
+              <div class="radio">
 
-            <% } %>
+                <input type="radio" name="pollOption" readonly onchange="enableVoting();" value="<%= poll.options[i].name %>">
+                <label for="pollOption"><%= poll.options[i].name %></label>
+              </div>
 
-            <button id="updateBtn" class="btn btn-lg btn-primary btn-block" type="submit">Vote! </button>
-            
+
+              <% } %>
+
+                <button id="updateBtn" title="Select option and click Vote button to vote." class="btn btn-lg btn-primary btn-block" disabled
+                  type="submit">Vote! </button>
+
           </form>
-           </div>
-        
+        </div>
 
-          <% include ../partials/footer %>
+
+        <% include ../partials/footer %>
 
 </body>
 

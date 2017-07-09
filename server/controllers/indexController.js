@@ -1,15 +1,12 @@
-const Poll = require("../models/polls");
+const Poll = require('../models/polls');
 
-
-module.exports.getIndex = getIndex;
 
 function getIndex(req, res, next) {
-    Poll.find({}, function (err, founded) {
-        if (err)
-            return next(err);
+  Poll.find({}, (err, founded) => {
+    if (err) { return next(err); }
 
-        res.render('index', { title: 'Express', message: req.flash('message'), polls: founded });
-    }
-
-    )
+    res.render('index', { title: 'List of polls', message: req.flash('message'), polls: founded, currentUser: req.user });
+  });
 }
+
+module.exports.getIndex = getIndex;

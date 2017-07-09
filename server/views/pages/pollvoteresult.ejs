@@ -2,107 +2,79 @@
 <html>
 
 <head>
-  <title>
-    <%= title %>
-  </title>
-  <% include ../partials/stylesheet %>
-    <% include ../partials/javascript %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-  
-      
-       <script>
-        $(document).ready(function () {
+    <title>
+        <%= title %>
+    </title>
+    <% include ../partials/stylesheet %>
+        <% include ../partials/javascript %>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
-            $.ajax({
-              url: '/polls/voteresult/<%= poll._id %>',
-              type: 'POST',
-              success: function (result) {
-                    var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    
-    data: {
-        labels: result.labels,
-        datasets: [{
-            label: '# of Votes',
-            data: result.data,
-            backgroundColor: result.backgroundColors,
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(255,99,132,1)'
-                
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        layout: {
-            padding: {
-                left: 50,
-                right: 50,
-                top: 50,
-                bottom: 50
-            }
-        }
-    }
-});
 
-                
-              },
-              error: function (error) {
-                alert('error occured ' + JSON.stringify(error));
-              }
-            });
-          });
+            <script>
+                $(document).ready(function () {
 
-        
-      </script>
+                    $.ajax({
+                        url: '/polls/voteresultchart/<%= poll._id %>',
+                        type: 'GET',
+                        success: function (result) {
+                            var ctx = document.getElementById("myChart");
+                            var myChart = new Chart(ctx, {
+                                type: result.type,
+
+                                data: {
+                                    labels: result.labels,
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: result.data,
+                                        backgroundColor: result.backgroundColors,
+                                        borderColor: result.borderColors,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    layout: {
+                                        padding: {
+                                            left: 50,
+                                            right: 50,
+                                            top: 50,
+                                            bottom: 50
+                                        }
+                                    }
+                                }
+                            });
+
+
+                        },
+                        error: function (error) {
+                            alert('error occured ' + JSON.stringify(error));
+                        }
+                    });
+                });
+            </script>
 
 </head>
 
 <body>
-  <% include ../partials/header %>
+    <% include ../partials/header %>
 
 
-    <% if (message && message.length > 0 ) { %>
-      <div class="alert alert-warning alert-dismissible fade in" role="alert">
-        <p>
-          <%= message %>
-      </div>
+        <% if (message && message.length > 0 ) { %>
+            <div class="alert alert-warning " role="alert">
+                <p>
+                    <%= message %>
+            </div>
 
-      <% } %>
+        <% } %>
 
-        
 
-        <div class="container">
 
-<canvas id="myChart" ></canvas>
-<script>
-</script>
-          <form class="form" action="/polls/vote/<%= poll._id %>" method="post" id="pollForm">
-            <h2 class="">poll</h2>
-            <label for="pollName" class="sr-only">Name</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
+                <div class="container">
+                    <canvas id="myChart" width="100%" height="100%" style="padding-top: 50px; padding-bottom: 50px;"  ></canvas>
+                </div>
 
-            <% for (var i=0; i<poll.options.length; i++) { %>
 
-                <label for="pollOption" class="sr-only"> <%= poll.options[i].name %></label>
-                <input type="text" name="pollOption" readonly  value="option: <%= poll.options[i].name %> votes: <%= poll.options[i].votes %> ">
-                
-                <br>
-
-            <% } %>
-
-            
-            
-          </form>
-           </div>
-        
-
-          <% include ../partials/footer %>
+                <% include ../partials/footer %>
 
 </body>
 

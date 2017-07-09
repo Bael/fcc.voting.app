@@ -10,7 +10,8 @@ module.exports.getList = function (req, res, next) {
       res.render('polls', {
         title: 'Polls list',
         message: req.flash('message'),
-        polls: founded
+        polls: founded,
+        currentUser: req.user
       });
     }
   });
@@ -20,7 +21,8 @@ module.exports.getList = function (req, res, next) {
 module.exports.getNewInstance = function (req, res, next) {
   res.render('newpoll', {
     title: 'Creating new poll',
-    message: req.flash('message')
+    message: req.flash('message'),
+    currentUser: req.user
   });
 
 };
@@ -78,7 +80,8 @@ module.exports.getById = function (req, res, next) {
         title: 'Poll info',
         message: req.flash('message'),
         poll: founded,
-        userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId === req.user._id)
+        userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId.equals(req.user._id)),
+        currentUser: req.user
       });
     }
   })
@@ -118,7 +121,8 @@ module.exports.updatePoll = function (req, res, next) {
           title: 'Poll info',
           message: "poll saved!",
           poll: success,
-          userIsAuthenticatedAndAuthor: (req.isAuthenticated() && success.authorId === req.user._id)
+          userIsAuthenticatedAndAuthor: (req.isAuthenticated() && success.authorId === req.user._id),
+          currentUser: req.user
         });
       });
     }
@@ -138,13 +142,29 @@ function getForVoteById(req, res, next) {
         title: 'Poll vote info',
         message: req.flash('message'),
         poll: founded,
+        currentUser: req.user
       });
     }
   });
 }
 
 
+module.exports.getVoteResultPage = function(req, res, next) {
+  Poll.findById(req.params.id, function (err, founded) {
+    if (err) {
+      return next(err);
+    } else {
+        res.render('pollvoteresult', {
+              title: 'Poll voting info',
+              message: req.flash('message'),
+              poll: founded,
+              currentUser: req.user
+            });
+    }
 
+   
+  });
+}
 module.exports.getVoteResultById = function (req, res, next) {
   Poll.findById(req.params.id, function (err, founded) {
     if (err) {
@@ -152,17 +172,14 @@ module.exports.getVoteResultById = function (req, res, next) {
     } else {
 
       const result = {
+        type:'pie',
         labels: [],
-        data: []
+        data: [],
+        backgroundColors: [],
+        borderColors: []
       };
 
-      for (let i = 0; i < founded.options.length; i++) {
-        result.labels.push(founded.options[i].name);
-        result.data.push(founded.options[i].votes);
-      }
-
-      
-      result.backgroundColors = ['#1f77b4',
+      const colors =  ['#1f77b4',
     '#ff7f0e',
     '#2ca02c',
     '#d62728',
@@ -171,13 +188,13 @@ module.exports.getVoteResultById = function (req, res, next) {
     '#2ca02c',
     '#d62728'];
 
-      /*
-       pattern.generate([
-    '#1f77b4',
-    '#ff7f0e',
-    '#2ca02c',
-    '#d62728'
-    ]);*/
+      for (let i = 0; i < founded.options.length; i++) {
+        result.labels.push(founded.options[i].name+":"+founded.options[i].votes);
+        result.data.push(founded.options[i].votes);
+        result.backgroundColors.push(colors[i % colors.length]);
+        result.borderColors.push('#000000');
+      }
+
 
       res.send(result);
     }
@@ -204,7 +221,8 @@ module.exports.vote = function (req, res, next) {
         res.render('pollvote', {
             title: 'Poll voting info',
             message: "You've already voted for this poll!",
-            poll: founded
+            poll: founded,
+            currentUser: req.user
           });
 
       } else { 
@@ -218,7 +236,8 @@ module.exports.vote = function (req, res, next) {
             res.render('pollvoteresult', {
               title: 'Poll voting info',
               message: req.flash('message'),
-              poll: savedPoll
+              poll: savedPoll,
+              currentUser: req.user
             });
           }
 

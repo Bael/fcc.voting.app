@@ -14,17 +14,29 @@
 
   	<div class="container">
 		<div class="page-header m-t-1">
-			<h1><%= title %></h1>
+			<h1>Voting app</h1>
 		</div>
-		<p class="lead">Welcome to <%= title %></p>
+		<p class="lead">Welcome to homepage</p>
     <p>Here you can vote on polls from list. Or create your own poll.</p>
-
     <ul>
     <% for(var i=0; i < polls.length; i++) { %>
         <li>
-            <a href='polls/<%= polls[i] %>'>
-                <%= polls[i] %>
+          <%= polls[i].name %>
+            <a href='polls/vote/<%= polls[i]._id %>'>
+                click to vote
             </a>
+            <span > or </span>
+            <a href='polls/voteresult/<%= polls[i]._id %>'>
+                click to see vote results
+            </a>
+            
+            <% if (currentUser) { %>
+            <span > or </span>
+            <a href='polls/<%= polls[i]._id %>'>
+                click to add poll options
+            </a>
+            <% } %>
+            
         </li>
     <% } %>
     </ul>

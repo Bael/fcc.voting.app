@@ -6,7 +6,7 @@
     <%= title %>
   </title>
   <% include ../partials/stylesheet %>
-  <% include ../partials/javascript %>
+    <% include ../partials/javascript %>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -32,7 +32,7 @@
 
           $("#addBtn").click(function () {
             $("#updateBtn").before(
-              " <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' name='pollOption' class='form-control' placeholder='vote option'   > <br> "
+              " <label for='pollOption' class='sr-only'>Vote Option:</label>   <input type='text' name='pollOption' class='form-control' placeholder='vote option'   >  "
             );
           });
         });
@@ -44,7 +44,7 @@
 
 
     <% if (message && message.length > 0 ) { %>
-      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <div class="alert alert-warning " role="alert">
         <p>
           <%= message %>
       </div>
@@ -59,31 +59,33 @@
             <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
 
             <ul>
-            <% for (var i=0; i<poll.options.length; i++) { %>
+              <% for (var i=0; i<poll.options.length; i++) { %>
                 <li>
-                <label for="pollOption" class="sr-only">Option</label>
-                <input type="text" name="pollOption" readonly class="form-control" placeholder="poll option" required value="<%= poll.options[i].name %>">
+                  <label for="pollOption" class="sr-only">Option</label>
+                  <input type="text" name="pollOption" readonly class="form-control" placeholder="poll option" required value="<%= poll.options[i].name %>">
                 </li>
-                
 
-            <% } %>
+
+                <% } %>
             </ul>
             <button id="updateBtn" class="btn btn-lg btn-primary btn-block" type="submit">Update </button>
             <br>
 
           </form>
-          <button id="addBtn" class="btn btn-lg btn-primary btn-block">add new option </button>
-        </div>
+          <button id="addBtn" class="btn btn-lg btn-primary btn-block">Add new vote option to this poll</button>
+
         <% if (userIsAuthenticatedAndAuthor) { %>
 
-          <button id="deleteBtn" class="btn btn-lg btn-primary btn-block">Delete </button>
+          <button id="deleteBtn" title="Click this button to delete this poll" class="btn btn-lg btn-primary btn-block">Delete this poll</button>
 
 
 
           <% } %>
 
 
-          <% include ../partials/footer %>
+        </div>
+        
+            <% include ../partials/footer %>
 
 </body>
 

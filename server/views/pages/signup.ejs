@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
     <% include ../partials/stylesheet %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-  	<% include ../partials/header %>
+</head>
+
+<body>
+  <% include ../partials/header %>
     <% if (message && message.length > 0 ) { %>
-     <div class="alert alert-warning alert-dismissible fade in" role="alert">
-       <p> <%= message %>
-     </div>
+      <div class="alert alert-warning" role="alert">
+        <p>
+          <%= message %>
+      </div>
 
-   <% } %>
+      <% } %>
 
-  	<div class="container">
-  		<div class="page-header m-t-1">
-  			<h1><%= title %></h1>
-  		</div>
+        <div class="container">
+          <div class="page-header m-t-1">
+            <h1>
+              <%= title %>
+            </h1>
+          </div>
 
-      <form class="form-signin" action="/signup" method="post">
+          <form class="form-signin" action="/signup" method="post">
             <h2 class="form-signin-heading">Please sign up</h2>
 
             <label for="inputName" class="sr-only">Name yourself</label>
@@ -31,14 +38,15 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
             <br>
-        </form>
+          </form>
 
 
 
-	</div>
+        </div>
 
 
-  <% include ../partials/footer %>
-	<% include ../partials/javascript %>
-  </body>
+        <% include ../partials/footer %>
+          <% include ../partials/javascript %>
+</body>
+
 </html>
