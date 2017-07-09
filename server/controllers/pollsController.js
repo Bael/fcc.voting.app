@@ -199,21 +199,31 @@ module.exports.vote = function (req, res, next) {
         userInfo.userId = req.user._id;
       }
 
-      founded.vote(req.body.pollOption, userInfo);
-      founded.save(function (err, savedPoll) {
-        if (err) {
-          console.log("Error ocuured while voting "+err.toString());
-          next(err);
-        }
-        else{ 
-          res.render('pollvoteresult', {
-            title: 'Poll voting info',
-            message: req.flash('message'),
-            poll: savedPoll
-          });
-        }
 
-      });
+      if (founded.userHasVoted(userInfo)) {
+        res.render('pollvote', {
+            title: 'Poll voting info',
+            message: "You've already voted for this poll!",
+            poll: founded
+          });
+
+      } else { 
+        founded.vote(req.body.pollOption, userInfo);
+        founded.save(function (err, savedPoll) {
+          if (err) {
+            console.log("Error ocuured while voting "+err.toString());
+            next(err);
+          }
+          else{ 
+            res.render('pollvoteresult', {
+              title: 'Poll voting info',
+              message: req.flash('message'),
+              poll: savedPoll
+            });
+          }
+
+        });
+      }
 
     }
   })
