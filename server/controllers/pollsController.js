@@ -29,7 +29,7 @@ module.exports.getNewInstance = function (req, res, next) {
 
 /// fill name and options text
 function fillPollInfo(poll, req) {
-  poll.name = req.body.name;
+  poll.name = req.body.pollName;
 
   for (var i = 0; i < req.body.pollOption.length; i++) {
     var option = req.body.pollOption[i];
@@ -75,16 +75,16 @@ module.exports.getById = function (req, res, next) {
   Poll.findById(req.params.id, function (err, founded) {
     if (err) {
       return next(err);
-    } else {
+    } 
       res.render('poll', {
         title: 'Poll info',
         message: req.flash('message'),
         poll: founded,
         userIsAuthenticatedAndAuthor: (req.isAuthenticated() && founded.authorId.equals(req.user._id)),
-        currentUser: req.user
+        currentUser: req.user,
       });
-    }
-  })
+    
+  });
 };
 
 // delete poll by id
