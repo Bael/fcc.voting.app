@@ -54,9 +54,9 @@
         <div class="container">
 
           <form class="form" action="/polls/<%= poll._id %>" method="post" id="pollForm">
-            <h2 class="">poll</h2>
-            <label for="pollName" class="sr-only">Name</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Name of poll" required value="  <%= poll.name %>">
+            <h3 class="form-header">Edit poll info</h2>
+            <label for="pollName" class="sr-only">Name of poll</label>
+            <input type="text" name="pollName" class="form-control" required value="<%= poll.name %>">
 
             <ul>
               <% for (var i=0; i<poll.options.length; i++) { %>
