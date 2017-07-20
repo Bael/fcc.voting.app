@@ -14,13 +14,40 @@
       <div class="info "><p> <%= message %></p></div>
    <% } %>
 
+
+
   	<div class="container">
 		<div class="page-header m-t-1">
 			<h1><%= title %></h1>
-		</div>
+    </div>
+    
+    <nav aria-label="Page navigation">
+    <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% for(var i=0; i < polls.length / pageSize; i++) { %>
+
+        <li><a href='/polls/pages/<%= i+1 %>'><%= i+1 %></a></li>
+    <% } %>
+    
+    
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
+
 		<p class="lead">Welcome to <%= title %></p>
     <p>Here you can vote on polls from list. Or create your own poll.</p>
     <a href="/polls/new"> Create new poll</a>
+
+
+
     <ul>
     <% for(var i=0; i < polls.length; i++) { %>
         <li>

@@ -1,9 +1,11 @@
 const passport = require('passport');
 const Poll = require('../models/polls');
 
+const pageSize = 3;
+
 // get all polls
 module.exports.getList = function (req, res, next) {
-  Poll.find({}, function (err, founded) {
+  Poll.find({}).limit(pageSize).exec(function (err, founded) {
     if (err) {
       return next(err);
     } else {
@@ -11,11 +13,33 @@ module.exports.getList = function (req, res, next) {
         title: 'Polls list',
         message: req.flash('message'),
         polls: founded,
-        currentUser: req.user
+        currentUser: req.user,
+        pageSize
       });
     }
   });
 }
+
+module.exports.getPage = function (req, res, next) {
+  
+  const currentPage = req.params.currentPage;
+  
+  Poll.find({}).skip((currentPage-1) * pageSize).limit(pageSize).exec(function (err, founded) {
+    if (err) {
+      return next(err);
+    } else {
+      res.render('polls', {
+        title: 'Polls list',
+        message: req.flash('message'),
+        polls: founded,
+        currentUser: req.user,
+        pageSize,
+        currentPage
+      });
+    }
+  });
+}
+
 
 // get new poll info
 module.exports.getNewInstance = function (req, res, next) {

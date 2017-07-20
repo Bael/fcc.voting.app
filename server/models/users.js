@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     password: String,
   },
 
-});
+}, { runSettersOnQuery: true });
 
 // Encrypt Password
 userSchema.methods.generateHash = function (password) {
