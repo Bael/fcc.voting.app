@@ -207,7 +207,7 @@ module.exports.vote = function (req, res, next) {
       return next(err);
     } else {
 
-      console.log(JSON.stringify(req.body));
+      // console.log(JSON.stringify(req.body));
       let userInfo = {
         ip: req.ip
       };
