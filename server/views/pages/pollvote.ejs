@@ -39,14 +39,20 @@
 
             <% for (var i=0; i<poll.options.length; i++) { %>
 
-              <div class="radio">
-
-                <input type="radio" name="pollOption" readonly onchange="enableVoting();" value="<%= poll.options[i].name %>">
-                <label for="pollOption"><%= poll.options[i].name %></label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="pollOption" readonly onchange="enableVoting();" value="<%= poll.options[i].name %>">
+                  <%= poll.options[i].name %>
+                </label>
               </div>
 
 
               <% } %>
+
+
+ 
+
+
 
                 <button id="updateBtn" title="Select option and click Vote button to vote." class="btn btn-lg btn-primary btn-block" disabled
                   type="submit">Vote! </button>

@@ -2,7 +2,7 @@
   <ul class="pagination">
 
     <!-- prev page -->
-    <% let prevPage = (pageInfo.currentPage > 1) ? '/polls/pages/'+(pageInfo.currentPage-1) : '#' %>
+    <% let prevPage = (pageInfo.currentPage > 1) ? '/polls/?page='+(pageInfo.currentPage-1) : '#' %>
     <% let prevClass = (pageInfo.currentPage > 1) ? '' : 'disabled' %>
     <li class="page-item <%= prevClass %>">
         <a class="page-link " href='<%= prevPage %>' aria-label="Next" >Next</a>
@@ -10,16 +10,16 @@
 
     <% for(var i=1; i < pageInfo.pagesCount+1; i++) { %>
         <% let activeClass = (i == pageInfo.currentPage) ? 'active' : '' %>
-        <li class="page-item <%= activeClass %>" ><a class="page-link" href='/polls/pages/<%= i %>'><%= i %></a></li>
+        <li class="page-item <%= activeClass %>" ><a class="page-link" href='/polls/?page=<%= i %>'><%= i %></a></li>
     <% } %>
 
     
      <!-- next page -->
     <% let nextIndex = 1 + parseInt(pageInfo.currentPage) %>
-    <% let nextPage = (pageInfo.currentPage < pageInfo.pagesCount) ? '/polls/pages/' + nextIndex : '#' %>
+    <% let nextPage = (pageInfo.currentPage < pageInfo.pagesCount) ? '/polls/?page=' + nextIndex : '#' %>
     <% let nextClass = (pageInfo.currentPage < pageInfo.pagesCount) ? '' : 'disabled' %>
     <li class="page-item <%= nextClass %>">
-        <a class="page-link" href='/polls/pages/<%= nextIndex %>' aria-label="Next" >Next</a>
+        <a class="page-link" href='/polls/?page=<%= nextIndex %>' aria-label="Next" >Next</a>
     </li>
 
     

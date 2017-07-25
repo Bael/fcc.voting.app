@@ -3,29 +3,12 @@ const Poll = require('../models/polls');
 
 const pageSize = 3;
 
-// get all polls
-module.exports.getList = function (req, res, next) {
-  res.redirect('/pages/1');
-  /*
-  Poll.find({}).limit(pageSize).exec(function (err, founded) {
-    if (err) {
-      return next(err);
-    } else {
-      res.render('polls', {
-        title: 'Polls list',
-        message: req.flash('message'),
-        polls: founded,
-        currentUser: req.user,
-        pageSize
-      });
-    }
-  });
-  */
-}
 
 module.exports.getPage = function (req, res, next) {
   
-  const currentPage = req.params.currentPage;
+  const currentPage = req.query.page || 1;
+  console.log('requested page is ' + req.query.page);
+
   Poll.count({}, function (err, count) {
 
       if (err) {
