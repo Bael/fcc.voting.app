@@ -5,6 +5,8 @@ const pageSize = 3;
 
 // get all polls
 module.exports.getList = function (req, res, next) {
+  res.redirect('/pages/1');
+  /*
   Poll.find({}).limit(pageSize).exec(function (err, founded) {
     if (err) {
       return next(err);
@@ -18,27 +20,39 @@ module.exports.getList = function (req, res, next) {
       });
     }
   });
+  */
 }
 
 module.exports.getPage = function (req, res, next) {
   
   const currentPage = req.params.currentPage;
-  
-  Poll.find({}).skip((currentPage-1) * pageSize).limit(pageSize).exec(function (err, founded) {
-    if (err) {
-      return next(err);
-    } else {
-      res.render('polls', {
-        title: 'Polls list',
-        message: req.flash('message'),
-        polls: founded,
-        currentUser: req.user,
-        pageSize,
-        currentPage
-      });
-    }
-  });
-}
+  Poll.count({}, function (err, count) {
+
+      if (err) {
+        return next(err) 
+      }
+      
+      const pagesCount = count / pageSize;
+
+      Poll.find({}).skip((currentPage-1) * pageSize).limit(pageSize).exec(function (err, founded) {
+      if (err) {
+        return next(err);
+      } else {
+        res.render('polls', {
+          title: 'Polls list',
+          message: req.flash('message'),
+          polls: founded,
+          currentUser: req.user,
+          pageInfo: {pageSize,
+          currentPage,
+          pagesCount}
+        });
+      }
+    });
+
+  }) 
+
+};
 
 
 // get new poll info
