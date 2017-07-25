@@ -4,48 +4,52 @@
     <title><%= title %></title>
       <% include ../partials/stylesheet %>
       <% include ../partials/javascript %>
-
-    <!--link rel='stylesheet' href='/stylesheets/style.css' /-->
   </head>
   <body>
-  	<% include ../partials/header %>
 
+  	<% include ../partials/header %>
     <% if (message) { %>
       <div class="info "><p> <%= message %></p></div>
    <% } %>
 
-
-
-  	<div class="container">
-		<div class="page-header m-t-1">
-			<h1><%= title %></h1>
-    </div>
-    
-   
-
-		<p class="lead">Welcome to <%= title %></p>
-    <p>Here you can vote on polls from list. Or create your own poll.</p>
-    <a href="/polls/new"> Create new poll</a>
-
+    <div class="container col-sm-10">
+    <p class="lead">Here you can vote on polls from list. Or <a href="/polls/new"> create your own poll</a></p>
     <% include ../partials/pager %>
-
-
-    <ul>
     <% for(var i=0; i < polls.length; i++) { %>
-        <li>
-          <p>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="voting" class="col-form-label"><%= polls[i].name %></label>
+          
+        </div>
+
+        <div class="col-sm-2">
+          <a href='polls/vote/<%= polls[i]._id %>'>
+                Click to vote
+            </a>
+            
+          
+
+        </div>
+        <div class="col-sm-2">
+          <a href='polls/voteresult/<%= polls[i]._id %>'>
+                click to see vote results
+            </a>
+
+        </div>
+        <% if (currentUser) { %>
+          <div class="col-sm-2">
             <a href='polls/<%= polls[i]._id %>'>
-                Edit poll <%= polls[i].name %>
+                click to add poll options
             </a>
-            </p>
-            <p>
-            <a href='polls/vote/<%= polls[i]._id %>'>
-                Vote for <%= polls[i].name %>
-            </a>
-            </p>
-        </li>
+            
+          </div>
+        
+        <% } %>    
+      </div>
+
     <% } %>
-    </ul>
+    
+    
 
 
 

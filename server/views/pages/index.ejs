@@ -3,8 +3,11 @@
   <head>
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+
+
   </head>
+
   <body>
   	<% include ../partials/header %>
 
@@ -12,37 +15,19 @@
       <div class="info "><p> <%= message %></p></div>
    <% } %>
 
-  	<div class="container">
-		<div class="page-header m-t-1">
-			<h1>Voting app</h1>
-		</div>
-		<p class="lead">Welcome to homepage</p>
-    <p>Here you can vote on polls from list. Or create your own poll.</p>
-    <ul>
-    <% for(var i=0; i < polls.length; i++) { %>
-        <li>
-          <%= polls[i].name %>
-            <a href='polls/vote/<%= polls[i]._id %>'>
-                click to vote
-            </a>
-            <span > or </span>
-            <a href='polls/voteresult/<%= polls[i]._id %>'>
-                click to see vote results
-            </a>
-            
-            <% if (currentUser) { %>
-            <span > or </span>
-            <a href='polls/<%= polls[i]._id %>'>
-                click to add poll options
-            </a>
-            <% } %>
-            
-        </li>
-    <% } %>
-    </ul>
 
-	</div>
-
+  	<div class="container col-sm-10">
+      <div class="jumbotron">
+      <h1 class="display-3">Hello, voters!</h1>
+      <p class="lead">This is a simple voting application. Here you can create your poll. Share it with your friends. And of course you can see results of polls.
+      </p>
+      <hr class="my-4">
+         <p>For start press button below:</p>
+        <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/polls" role="button">See polls</a>
+      </p>
+      </div>
+    </div>
 
 
   <% include ../partials/footer %>
