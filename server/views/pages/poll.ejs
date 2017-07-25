@@ -5,13 +5,12 @@
   <title>
     <%= title %>
   </title>
-  <% include ../partials/stylesheet %>
-    <% include ../partials/javascript %>
+    <% include ../partials/stylesheet %>
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script >
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
-      <link rel='stylesheet' href='/stylesheets/style.css' />
+      
       <script>
         $(document).ready(function () {
 
@@ -86,6 +85,8 @@
         </div>
         
             <% include ../partials/footer %>
+
+<% include ../partials/javascript %>
 
 </body>
 

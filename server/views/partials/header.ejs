@@ -8,7 +8,8 @@
   <a class="navbar-brand" href="#">Voting app</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+  
+    <ul class="navbar-nav mr-auto ">
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -17,27 +18,23 @@
       </li>
 
     <% if (currentUser) { %>
-      
-   
       <li class="nav-item">
         <a class="nav-link" title="Click to create new poll" href="/polls/new">Create new poll</a>
       </li>
-
-    
-      <li class="nav-item">
-        <a href="/profile" title="Click to view your profile" class="nav-link">You are: <%= currentUser.getName() %></a>
-      </li>
-
-      <li class="nav-item">
-        <a href="/logout" title="Click to logout from app" class="nav-link">Logout</a>
-      </li>
-    <% } else { %>
-    <li class="nav-item">
-        <a class="nav-link" title="Click to login into" href="/login">Login</a>
-    </li>
-
     <% } %>
+ 
+
+
     </ul>
     
+
+     <form class="form-inline my-2 my-lg-0">
+     <% if (currentUser) { %>
+           <a href="/profile" title="Click to view your profile" class="nav-link">You are: <%= currentUser.getName() %></a>
+           <a href="/logout" title="Click to logout from app" class="nav-link">Logout</a>
+     <% } else { %>
+        <a class="nav-link" title="Click to login into" href="/login">Login</a>
+    <% } %>
+    </form>
   </div>
 </nav>

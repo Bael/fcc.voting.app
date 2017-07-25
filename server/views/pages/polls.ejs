@@ -13,47 +13,10 @@
    <% } %>
 
     <div class="container col-sm-10">
-    <p class="lead">Here you can vote on polls from list. Or <a href="/polls/new"> create your own poll</a></p>
-    <% include ../partials/pager %>
-    <% for(var i=0; i < polls.length; i++) { %>
-      <div class="row">
-        <div class="col-sm-6">
-          <label for="voting" class="col-form-label"><%= polls[i].name %></label>
-          
-        </div>
-
-        <div class="col-sm-2">
-          <a href='polls/vote/<%= polls[i]._id %>'>
-                Click to vote
-            </a>
-            
-          
-
-        </div>
-        <div class="col-sm-2">
-          <a href='polls/voteresult/<%= polls[i]._id %>'>
-                click to see vote results
-            </a>
-
-        </div>
-        <% if (currentUser) { %>
-          <div class="col-sm-2">
-            <a href='polls/<%= polls[i]._id %>'>
-                click to add poll options
-            </a>
-            
-          </div>
-        
-        <% } %>    
-      </div>
-
-    <% } %>
-    
-    
-
-
-
-	</div>
+      <p class="lead">Here you can vote on polls from list. Or <a href="/polls/new"> create your own poll</a></p>
+      <% include ../partials/pager %>
+      <% include ../partials/pollstable %>
+  	</div>
 
 
 

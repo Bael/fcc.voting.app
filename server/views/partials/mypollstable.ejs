@@ -1,0 +1,58 @@
+
+<% if (currentUser) { %>
+    <% for(var i=0; i < polls.length; i++) { %>
+      
+
+        <% if (currentUser._id.equals(polls[i].authorId) ) { %>  
+
+            <div class="d-flex flex-row d-flex justify-content-end list-group-item">
+                <div class="p-2 mr-auto">
+                <label for="voting" class="col-form-label"><%= polls[i].name %></label>
+            </div>
+
+            
+            <div class="p-2">
+            <a title="Click to vote" href='polls/vote/<%= polls[i]._id %>'>
+                    Vote!
+            </a>
+            
+            </div>
+
+            <div class="p-2">
+            <a class="twitter-share-button"
+                href="https://twitter.com/intent/tweet?text=Here is a poll: <%= polls[i].name %> Choose your option: <%=baseUrl + 'polls/vote/'+ polls[i]._id %>"
+                data-size="large">
+                Invite voters with Tweeter</a>
+            </div>
+            
+
+            <div class="p-2">
+            <a title="Click to see vote results" href='polls/voteresult/<%= polls[i]._id %>'>
+                    Vote results
+                </a>
+            </div>
+
+            <div class="p-2">
+            <a class="twitter-share-button"
+                href="https://twitter.coj6u58m/intent/tweet?text=Here is a voting results for: <%= polls[i].name %> <%=baseUrl + 'polls/voteresult/'+ polls[i]._id %>"
+                data-size="large">
+                Share voting results</a>
+            </div>
+
+            
+            <div class="p-2">  
+                <a title="Click to add vote options" href='polls/<%= polls[i]._id %>'>
+                    Add poll options or delete poll
+                </a>
+            
+            </div>
+        
+        </div>
+
+        <% } %>
+
+     
+      
+    <% } %>
+    
+<% } %>    

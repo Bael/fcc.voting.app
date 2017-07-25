@@ -1,0 +1,34 @@
+
+    <% for(var i=0; i < polls.length; i++) { %>
+      
+      <div class="d-flex flex-row d-flex justify-content-end list-group-item">
+        <div class="p-2 mr-auto">
+          <label for="voting" class="col-form-label"><%= polls[i].name %></label>
+        </div>
+
+        <div class="p-2">
+        <a title="Click to vote" href='vote/<%= polls[i]._id %>'>
+                Vote!
+            </a>
+          
+        </div>
+        <div class="p-2">
+        <a title="Click to see vote results" href='voteresult/<%= polls[i]._id %>'>
+                Vote results
+            </a>
+        </div>
+        <% if (currentUser) { %>
+        <div class="p-2">  
+            <a title="Click to add vote options" href='<%= polls[i]._id %>'>
+                Add poll options
+            </a>
+          
+        </div>
+        <% } %>    
+      </div>
+
+
+     
+      
+    <% } %>
+    

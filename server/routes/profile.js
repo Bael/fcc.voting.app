@@ -6,5 +6,4 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', authController.isAuthenticated, profileController.getProfile);
 
-
 module.exports = router;
