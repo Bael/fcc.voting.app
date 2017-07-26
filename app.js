@@ -26,11 +26,11 @@ app.set('view engine', 'ejs');
 
 // Database configuration
 // connect to our database
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useMongoClient: true });
 // Check if MongoDB is running
 mongoose.connection.on('error', () => {
-  console.error('MongoDB Connection Error. Make sure MongoDB is running.');
-  throw new Error('MongoDB Connection Error. Make sure MongoDB is running.');
+    console.error('MongoDB Connection Error. Make sure MongoDB is running.');
+    throw new Error('MongoDB Connection Error. Make sure MongoDB is running.');
 });
 
 
@@ -51,10 +51,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 console.log(`process.env.SESSION_SECRET is ${process.env.SESSION_SECRET}`);
 
 const session_configuration = {
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true },
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
 };
 
 // !!!!!!!!!!!!for development purposes
@@ -75,21 +75,21 @@ app.use('/polls', pollsRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
