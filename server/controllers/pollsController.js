@@ -144,37 +144,55 @@ module.exports.updatePoll = function(req, res, next) {
 module.exports.getForVoteById = getForVoteById;
 
 function getForVoteById(req, res, next) {
+    const baseUrl = req.protocol + '://' + req.get('host') + '/';
     Poll.findById(req.params.id, (err, founded) => {
         if (err) {
             next(err);
         } else {
-            res.render('pollvote', {
-                title: 'Poll vote info',
-                message: req.flash('message'),
-                poll: founded,
-                currentUser: req.user
-            });
+            // console.log(JSON.stringify(req.body));
+            let userInfo = {
+                ip: req.ip
+            };
+
+            if (req.isAuthenticated()) {
+                userInfo.userId = req.user._id;
+            }
+
+
+            if (founded.userHasVoted(userInfo)) {
+                getVoteResultPage(req, res, next);
+            } else {
+                res.render('pollvote', {
+                    title: 'Poll vote info',
+                    message: req.flash('message'),
+                    poll: founded,
+                    currentUser: req.user,
+                    baseUrl
+                });
+            }
         }
     });
 }
 
-
-module.exports.getVoteResultPage = function(req, res, next) {
+function getVoteResultPage(req, res, next) {
     Poll.findById(req.params.id, function(err, founded) {
         if (err) {
             return next(err);
         } else {
+            const baseUrl = req.protocol + '://' + req.get('host') + '/';
             res.render('pollvoteresult', {
                 title: 'Poll voting info',
                 message: req.flash('message'),
                 poll: founded,
-                currentUser: req.user
+                currentUser: req.user,
+                baseUrl
             });
         }
 
 
     });
 }
+module.exports.getVoteResultPage = getVoteResultPage;
 module.exports.getVoteResultById = function(req, res, next) {
     Poll.findById(req.params.id, function(err, founded) {
         if (err) {
@@ -213,6 +231,7 @@ module.exports.getVoteResultById = function(req, res, next) {
 };
 
 module.exports.vote = function(req, res, next) {
+    const baseUrl = req.protocol + '://' + req.get('host') + '/';
     Poll.findById(req.params.id, function(err, founded) {
         if (err) {
             return next(err);
@@ -233,7 +252,8 @@ module.exports.vote = function(req, res, next) {
                     title: 'Poll voting info',
                     message: "You've already voted for this poll!",
                     poll: founded,
-                    currentUser: req.user
+                    currentUser: req.user,
+                    baseUrl
                 });
 
             } else {
@@ -247,7 +267,8 @@ module.exports.vote = function(req, res, next) {
                             title: 'Poll voting info',
                             message: req.flash('message'),
                             poll: savedPoll,
-                            currentUser: req.user
+                            currentUser: req.user,
+                            baseUrl
                         });
                     }
 

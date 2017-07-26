@@ -32,6 +32,13 @@
 
         <div class="container">
 
+          <div class="p-2">
+          <a class="twitter-share-button" target="_blank"
+             href="https://twitter.com/intent/tweet?text=Here is a poll: <%= poll.name %> Choose your option: <%=baseUrl + 'polls/vote/'+ poll._id %>"
+             data-size="large">
+             Invite voters with Tweeter</a>
+          </div>
+
           <form class="form" action="/polls/vote/<%= poll._id %>" method="post" id="pollForm">
             <h2 class="">poll</h2>
             <label for="pollName" class="sr-only">Name</label>
