@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
         name: String
     }
 
-}, { runSettersOnQuery: true });
+});
 
 // Encrypt Password
 userSchema.methods.generateHash = function(password) {
@@ -28,7 +28,7 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.methods.getName = function() {
-    return this.local.name;
+    return this.local.name || this.twitter.name;
 };
 
 // create the model for users and expose it to our app

@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 
 /* -------------- Declare routes ---------------*/
@@ -26,7 +27,7 @@ app.set('view engine', 'ejs');
 
 // Database configuration
 // connect to our database
-mongoose.connect(process.env.MONGO_URI, { useMongoClient: true });
+mongoose.connect(process.env.MONGO_URI);
 // Check if MongoDB is running
 mongoose.connection.on('error', () => {
     console.error('MongoDB Connection Error. Make sure MongoDB is running.');
@@ -50,17 +51,44 @@ app.use(express.static(path.join(__dirname, 'public')));
 // auth work
 console.log(`process.env.SESSION_SECRET is ${process.env.SESSION_SECRET}`);
 
+/*
 const session_configuration = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true },
 };
-
+*/
 // !!!!!!!!!!!!for development purposes
-session_configuration.cookie.secure = false;
+//session_configuration.cookie.secure = false;
 
-app.use(session(session_configuration));
+//app.use(session(session_configuration));
+
+var store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: 'mySessions'
+});
+
+// Catch errors 
+store.on('error', function(error) {
+    assert.ifError(error);
+    assert.ok(false);
+});
+
+app.use(session({
+    secret: 'This is a secret',
+    cookie: {
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+    },
+    store: store,
+    // Boilerplate options, see: 
+    // * https://www.npmjs.com/package/express-session#resave 
+    // * https://www.npmjs.com/package/express-session#saveuninitialized 
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

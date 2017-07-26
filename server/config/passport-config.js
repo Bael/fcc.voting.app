@@ -112,20 +112,34 @@ function applyTwitterStrategy(passport) {
     passport.use('twitter', new TwitterStrategy({
             consumerKey: process.env.TWITTER_KEY,
             consumerSecret: process.env.TWITTER_SECRET,
-            callbackURL: "http://127.0.0.1:7000/auth/twitter/callback"
+            callbackURL: process.env.TWITTER_CALLBACK
         },
+
         function(token, tokenSecret, profile, done) {
 
-            User.findOne({
-                'twitter.id': profile.id,
-            }, (err, user) => {
-                // if errors
-                if (err) { return done(err); }
-                if (user) {
+            console.log(process.env.TWITTER_CALLBACK);
+            //console.log(arguments);
+            var searchQuery = {
+                'twitter.id': profile.id
+            };
+
+            var updates = {
+                twitter: {
+                    name: profile.displayName,
+                    id: profile.id
+                }
+            };
+
+            var options = {
+                upsert: true
+            };
+
+            User.findOneAndUpdate(searchQuery, updates, options, function(err, user) {
+                if (err) {
+                    return done(err);
+                } else {
                     return done(null, user);
                 }
-
-                createTwitterUser(profile.displayName, profile.id, done);
             });
         }
     ));
@@ -133,6 +147,8 @@ function applyTwitterStrategy(passport) {
 
 
 function createTwitterUser(name, id, done) {
+    console.log("createTwitterUser started!");
+
     const newUser = new User();
     // Get user name from req.body
     newUser.twitter.name = name;

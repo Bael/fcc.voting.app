@@ -7,19 +7,19 @@
         </div>
 
         <div class="p-2">
-        <a title="Click to vote" href='vote/<%= polls[i]._id %>'>
+        <a title="Click to vote" href='/polls/vote/<%= polls[i]._id %>'>
                 Vote!
             </a>
           
         </div>
         <div class="p-2">
-        <a title="Click to see vote results" href='voteresult/<%= polls[i]._id %>'>
+        <a title="Click to see vote results" href='/polls/voteresult/<%= polls[i]._id %>'>
                 Vote results
             </a>
         </div>
         <% if (currentUser) { %>
         <div class="p-2">  
-            <a title="Click to add vote options" href='<%= polls[i]._id %>'>
+            <a title="Click to add vote options" href='/polls/<%= polls[i]._id %>'>
                 Add poll options
             </a>
           

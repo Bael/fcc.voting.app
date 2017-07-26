@@ -5,7 +5,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 /* GET polls list. */
-router.get('/', authController.isAuthenticated, pollsController.getPage);
+router.get('/', pollsController.getPage);
 
 /* GET new poll page. */
 router.get('/new', authController.isAuthenticated, pollsController.getNewInstance);

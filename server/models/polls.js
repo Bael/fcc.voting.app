@@ -41,13 +41,13 @@ pollSchema.methods.vote = function(name, userInfo) {
 function userHasVoted(userInfo) {
     for (let i = 0; i < this.votes.length; i += 1) {
         const currentVote = this.votes[i];
-        if (userInfo.userId) {
+        if (userInfo.userId && currentVote.voterId) {
             console.log(`this.votes[i].voterId : ${currentVote.voterId}, userInfo.userId : ${userInfo.userId}`);
             if (currentVote.voterId.equals(userInfo.userId)) {
                 // console.log("You Already voted!");
                 return true;
             }
-        } else if (currentVote.voterIP === userInfo.ip && !currentVote.voterId) {
+        } else if (!userInfo.userId && !currentVote.voterId && currentVote.voterIP === userInfo.ip) {
             return true;
         }
     }
