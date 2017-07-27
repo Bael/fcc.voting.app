@@ -4,7 +4,7 @@
     <!-- prev page -->
     <% let prevPage = (pageInfo.currentPage > 1) ? '/polls/?page='+(pageInfo.currentPage-1) : '#' %>
     <% let prevClass = (pageInfo.currentPage > 1) ? '' : 'disabled' %>
-    <li class="page-item <%= prevClass %>">
+    <li title="Go to previous page" class="page-item <%= prevClass %>">
         <a class="page-link " href='<%= prevPage %>' aria-label="Prev" >Prev</a>
     </li>
 
@@ -18,7 +18,7 @@
     <% let nextIndex = 1 + parseInt(pageInfo.currentPage) %>
     <% let nextPage = (pageInfo.currentPage < pageInfo.pagesCount) ? '/polls/?page=' + nextIndex : '#' %>
     <% let nextClass = (pageInfo.currentPage < pageInfo.pagesCount) ? '' : 'disabled' %>
-    <li class="page-item <%= nextClass %>">
+    <li title="Go to next page" class="page-item <%= nextClass %>">
         <a class="page-link" href='/polls/?page=<%= nextIndex %>' aria-label="Next" >Next</a>
     </li>
 

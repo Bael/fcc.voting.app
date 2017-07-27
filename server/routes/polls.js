@@ -13,11 +13,15 @@ router.get('/new', authController.isAuthenticated, pollsController.getNewInstanc
 /* create new poll . */
 router.post('/new', authController.isAuthenticated, pollsController.createNewPoll);
 
+/* delete poll by id. */
+router.post('/delete/:id', authController.isAuthenticated, pollsController.deleteFromProfileById);
+/* delete poll by id. */
+router.delete('/:id', authController.isAuthenticated, pollsController.deleteById);
+
+
 /* get poll by id. */
 router.get('/:id', authController.isAuthenticated, pollsController.getById);
 
-/* delete poll by id. */
-router.delete('/:id', authController.isAuthenticated, pollsController.deleteById);
 
 /* update poll. */
 router.post('/:id', authController.isAuthenticated, pollsController.updatePoll);

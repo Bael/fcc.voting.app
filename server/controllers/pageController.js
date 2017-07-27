@@ -1,4 +1,4 @@
-const pageSize = 3;
+const pageSize = 10;
 
 function getPage(mongooseModel, queryObject, currentPage, callback) {
 

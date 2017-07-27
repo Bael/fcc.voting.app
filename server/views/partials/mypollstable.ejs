@@ -1,4 +1,5 @@
 
+
 <% if (currentUser) { %>
     <% for(var i=0; i < polls.length; i++) { %>
       
@@ -7,19 +8,14 @@
 
             <div class="d-flex flex-row d-flex justify-content-end list-group-item">
                 <div class="p-2 mr-auto">
-                <a title="Click to vote" href='polls/vote/<%= polls[i]._id %>'><%= polls[i].name %></a>
-            </div>
+                    <a title="Click to vote" href='polls/vote/<%= polls[i]._id %>'><%= polls[i].name %></a>
+                </div>
 
           
-            
-            <div class="p-2">  
-                <a title="Click to delete poll" href='polls/<%= polls[i]._id %>'>
-                    Delete
-                </a>
-            
+                <form class="form-inline my-2 my-lg-0" method="post" action="/polls/delete/<%= polls[i]._id %>">
+                    <button title="Click to delete poll" class="btn btn-sm btn-primary" type="submit">Delete</button>
+                </form>
             </div>
-        
-        </div>
 
         <% } %>
 

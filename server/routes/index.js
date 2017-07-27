@@ -60,4 +60,6 @@ router.get('/signup', authController.getSignUpPage);
 
 router.post('/signup', authController.signUpUser);
 
+router.get('/help', indexController.getHelpPage);
+
 module.exports = router;

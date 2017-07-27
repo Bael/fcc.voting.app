@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <% include ../partials/stylesheet %>
+  
+</head>
+
+<body>
+
+<% include ../partials/header %>
+    <p>
+    <div class="container col-sm-10">
+
+        <div class="jumbotron">
+            <h1 class="display-3">How it works:</h1>
+            <h1 class="display-5">If you're not authenticated:</h1>
+            
+            <p class="lead">You can vote for any poll. Limit - one time for one poll and one ip address.
+            </p>
+            <p class="lead">You can share vote link via Twitter.
+            </p>
+            
+            <p class="lead"> When you're voted you can see results.
+            </p>
+                <p class="lead">You can share vote results link via Twitter.
+            </p>
+            
+            <h1 class="display-5">If you're authenticated:</h1>
+            <p class="lead">You can do all items above (vote limit - one time - one account - one poll)
+            </p>
+            <p class="lead">You can add vote options to other polls.
+            </p>
+            <p class="lead">You can create your own polls</p>
+            
+            <p class="lead">On your profile page (click on your name in right upper corner), you can see your own polls and delete them if needed.
+            </p>
+            
+            <hr class="my-4">
+            <p>To create new poll, press button below:</p>
+            
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="/polls/new" role="button">Create new poll</a>
+                </p>
+                
+        </div>
+        
+    </div>
+
+    
+
+    </div>
+        
+    <% include ../partials/footer %>
+</body>
+
+</html>

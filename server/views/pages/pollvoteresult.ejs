@@ -68,19 +68,27 @@
         <% } %>
 
 
-             <div class="p-2">
+        <div class="p-2">
             <a class="twitter-share-button" target="_blank"
-                href="https://twitter.coj6u58m/intent/tweet?text=Here is a voting results for: <%= poll.name %> <%=baseUrl + 'polls/voteresult/'+ poll._id %>"
+                href="https://twitter.com/intent/tweet?text=Here is a voting results for: <%= poll.name %> <%=baseUrl + 'polls/voteresult/'+ poll._id %>"
                 data-size="large">
-                Share voting results</a>
-            </div>
-               
-                    <canvas id="myChart" style="position: relative; height:50vh; width:60vw" maintainAspectRatio responsive></canvas>
+                Share voting results with Twitter</a>
+                or
+             <a class="twitter-share-button" target="_blank"
+             href="https://twitter.com/intent/tweet?text=Here is a poll: <%= poll.name %> Choose your option: <%=baseUrl + 'polls/vote/'+ poll._id %>"
+             data-size="large">
+            Invite to vote with Twitter</a>
+        
+        <canvas id="myChart" style="position: relative; height:50vh; width:60vw" maintainAspectRatio responsive></canvas>
+        
+        </div>
+        
+        
               
 
 
-                <% include ../partials/footer %>
-
+                
+    <% include ../partials/footer %>
 </body>
 
 </html>

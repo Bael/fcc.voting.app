@@ -3,4 +3,12 @@ function getIndex(req, res, next) {
 
 }
 
+function getHelpPage(req, res, next) {
+    res.render('help', { title: 'Help page', message: req.flash('message'), polls: [], currentUser: req.user });
+
+}
+
+
+module.exports.getHelpPage = getHelpPage;
+
 module.exports.getIndex = getIndex;

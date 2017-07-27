@@ -112,6 +112,20 @@ module.exports.deleteById = function(req, res, next) {
 
 };
 
+module.exports.deleteFromProfileById = function(req, res, next) {
+    Poll.remove({
+        _id: req.params.id
+    }, function(err, result) {
+        if (err) {
+            return next(err);
+        }
+        req.flash('message', 'Successfuly deleted');
+        res.redirect('/profile/');
+    });
+
+
+}
+
 // update poll
 module.exports.updatePoll = function(req, res, next) {
     console.log("req.params.id is " + req.params.id);
