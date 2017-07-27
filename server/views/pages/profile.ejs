@@ -8,20 +8,26 @@
 
   	<% include ../partials/header %>
 
-    <% if (message) { %>
-      <div class="info "><p> <%= message %></p></div>
-   <% } %>
+
 
   	<div class="container">
+     <% if (message && message.length > 0 ) { %>
+     <div class="alert alert-warning " role="alert">
+       <p> <%= message %>
+     </div>
+
+     <% } %>
+     
 		<div class="page-header m-t-1">
 			<h1><%= title %></h1>
 		</div>
 		<p class="lead">Welcome to your profile page, <%= currentUser.getName() %>. Here you can manage your polls.</p>
-
-      
+    
       <% include ../partials/mypollstable %>
 
-    
+    <% if (currentUser.local) { %>
+    <p class="lead">And change your password <a href="/changepassword">click here to change</a>.</p>
+    <% } %>
   	</div>
 
 

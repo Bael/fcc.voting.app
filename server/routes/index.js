@@ -12,6 +12,9 @@ router.get('/', indexController.getIndex);
 /* AUTH work*/
 router.get('/login', authController.getLoginPage);
 
+router.get('/changepassword', authController.isAuthenticated, authController.getChangePasswordPage);
+router.post('/changepassword', authController.isAuthenticated, authController.changePassword);
+
 router.get('/auth/twitter', passport.authenticate('twitter'));
 
 /*
